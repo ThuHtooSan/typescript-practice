@@ -16,10 +16,18 @@ const list = new ListTemplate(ul);
 form.addEventListener('submit', (e: Event) => {
   e.preventDefault();
 
+  type contentType = [string, string, number];
+
+  const content: contentType = [
+    toFrom.value,
+    details.value,
+    amount.valueAsNumber,
+  ];
+
   const doc: HasFormatter =
     type.value === 'invoice'
-      ? new Invoice(toFrom.value, details.value, amount.valueAsNumber)
-      : new Payment(toFrom.value, details.value, amount.valueAsNumber);
+      ? new Invoice(...content)
+      : new Payment(...content);
 
   list.render(doc, type.value, 'end');
 });
